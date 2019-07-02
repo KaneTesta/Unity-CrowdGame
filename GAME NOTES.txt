@@ -1,0 +1,19 @@
+
+Spawn Area (X,Y,Z):
+
+Bottom-Left: (-11, 0, -3)
+Bottom-Right: (12, 0, -3)
+Top-Left: (-16, 0, 16)
+Top-Right: (18, 0, 16)
+
+Character:
+Scale = 0.4
+Rotated 180 Degrees in y-axis to face front.
+
+
+Rock Concert Game
+- Generate stadium room
+- Dynamic generate players with random moves
+- Random generate crowd surfer & their direction
+- Generate reactions to crowdsurfer
+- Generate spotlights etc.
