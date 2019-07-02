@@ -1,0 +1,16 @@
+
+Crowd Surfer Spawn Area (X,Y,Z):
+
+Top-Left: (-14,6,6.75)
+Top-Right:(8, 6, 6.75)
+
+Character:
+Scale = 0.4
+Rotation = (270, 90, 90)
+
+
+Rock Concert Game
+- Random generate crowd surfer & their direction
+- Crowd surfer falling when reaching wall
+- Generate reactions to crowdsurfer
+- Generate Music
