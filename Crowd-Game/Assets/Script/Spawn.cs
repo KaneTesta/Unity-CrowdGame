@@ -5,51 +5,45 @@ using UnityEngine;
 public class Spawn : MonoBehaviour
 {
 
-    public GameObject crowdMember;
-    public int xPos;
-    public int zPos;
-    public int crowdCount = 0;
-    public int danceMove;
-    public static float currentScale = 0.4f;
-    public Animation anim;
+    public GameObject surfer1;
+    public GameObject surfer2;
+    int xPos;
+    int surfCount = 0;
+    int surfType;
+    static float currentScale = 0.4f;
+    Animation anim;
 
 
     // Start is called before the first frame update
     void Start()
     {
-        StartCoroutine(CrowdSpawn());
+        StartCoroutine(SurfSpawn());
     }
 
 
-    IEnumerator CrowdSpawn()
+    IEnumerator SurfSpawn()
     {
-        while (crowdCount < 50)
+        while (surfCount < 5)
         {
             //Instantiate Random Variables
-            xPos = Random.Range(-16,19);
-            zPos = Random.Range(-3,17);
-            danceMove = Random.Range(1,4);
+            xPos = Random.Range(-14,9);
+            surfType = Random.Range(1,3);
             
-
+            Debug.Log(surfType);
             //Create Character in Game
-            Instantiate(crowdMember, new Vector3(xPos,0,zPos), Quaternion.Euler(0,180,0));
-            crowdMember.transform.localScale = new Vector3(currentScale, currentScale, currentScale);
-            anim = crowdMember.GetComponent<Animation>();
-
-            if (danceMove == 1){
-                Debug.Log("Option 1");
-                anim.Play("Rock_Out1");
-            } else if(danceMove == 2){
-                Debug.Log("Option 2");
-                anim.Play("Rock_Out2");
-            } else {
-                Debug.Log("Option 3");
-                anim.Play("Rock_Out3");
+            if (surfType == 1){
+                Instantiate(surfer1, new Vector3(xPos,6,6.75f), Quaternion.identity);
+                surfer1.transform.localScale = new Vector3(currentScale, currentScale, currentScale);
+                anim = surfer1.GetComponent<Animation>();
+                anim.wrapMode = WrapMode.Loop;
+            } else if (surfType == 2){
+                Instantiate(surfer2, new Vector3(xPos,6,6.75f), Quaternion.identity);
+                surfer2.transform.localScale = new Vector3(currentScale, currentScale, currentScale);
+                anim = surfer2.GetComponent<Animation>();
+                anim.wrapMode = WrapMode.Loop;
             }
-            
-
-            yield return new WaitForSeconds(0);
-            crowdCount+=1;
+            yield return new WaitForSeconds(3);
+            surfCount+=1;
         }
     }
 

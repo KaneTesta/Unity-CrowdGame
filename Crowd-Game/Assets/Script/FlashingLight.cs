@@ -15,7 +15,7 @@ public class FlashingLight : MonoBehaviour
 	{
 		while (true)
 		{
-			yield return new WaitForSeconds(0.25f);
+			yield return new WaitForSeconds(0.2f);
 			testLight.enabled = ! testLight.enabled;
 
 		}
