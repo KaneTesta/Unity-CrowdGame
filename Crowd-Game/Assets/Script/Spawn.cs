@@ -23,7 +23,7 @@ public class Spawn : MonoBehaviour
 
     IEnumerator SurfSpawn()
     {
-        while (surfCount < 10)
+        while (surfCount < 5)
         {
             //Instantiate Random Variables
             xPos = Random.Range(-14,9);
