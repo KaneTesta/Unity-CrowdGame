@@ -1,4 +1,5 @@
 ﻿using System.Collections;
+using System;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -9,10 +10,11 @@ public class Player : MonoBehaviour
     private CharacterController controller;
     private CharacterController controller2;
     public float speed = 6.0f;
-    int moveDirection = -1;
     private Vector3 movementVector = Vector3.zero;
     private bool isLeft = false;
     private bool isRight = false;
+    float distBW = 1000;
+    int keysPressed = 0;
 
     public GameObject[] players = new GameObject[2];
     int playerIndex = 0;
@@ -30,62 +32,65 @@ public class Player : MonoBehaviour
     void Update()
     {
         Debug.Log(playerIndex);
-
-        if (Input.GetKeyDown(KeyCode.LeftShift)){
-            isLeft = false;
-            isRight = false;
-
-            if (playerIndex == 0){
-                playerIndex = 1;
-                anim.SetInteger("AnimPar",0);
-            } else {
-                playerIndex = 0;
-                anim2.SetInteger("AnimPar",0);
-            }
-
-        } 
-        
+        distBW = Math.Abs(players[0].transform.position.x - players[1].transform.position.x);
+      
         if (Input.GetKey(KeyCode.A) || Input.GetKey(KeyCode.D)){
 
+            if (Input.GetKey(KeyCode.A) && keysPressed<1){
 
-            if (playerIndex == 0){
-                anim.SetInteger("AnimPar",1);
-            } else {
-                anim2.SetInteger("AnimPar",1);
-            }
-
-            if (Input.GetKey(KeyCode.A)){
-
-                moveDirection = -1;
-                //move -90 degrees in y axis                
-                if (!isLeft){
-                    isLeft = true;
-
-                    players[playerIndex].transform.Rotate(0, -90, 0);
-
-                    if (isRight) {
-                        isRight = false;
-                        transform.Rotate(0, -90, 0);
-                    }
+                if (playerIndex == 0){
+                    anim.SetInteger("AnimPar",1);
+                } else {
+                    anim2.SetInteger("AnimPar",1);
                 }
-                movementVector = players[playerIndex].transform.forward *speed;
 
-            } else {
+                keysPressed++;
+                if (playerIndex == 0 || (playerIndex == 1 && distBW > 3)){
+                    //move -90 degrees in y axis                
+                    if (!isLeft){
+                        isLeft = true;
 
-                moveDirection = 1;
-                //move 90 degrees in y axis
-                if (!isRight){
-                    isRight = true;
-                    players[playerIndex].transform.Rotate(0, 90, 0);
+                        players[playerIndex].transform.Rotate(0, -90, 0);
 
-                    if (isLeft) {
-                        isLeft = false;
+                        if (isRight) {
+                            isRight = false;
+                            transform.Rotate(0, -90, 0);
+                        }
+                    }
+                    movementVector = players[playerIndex].transform.forward *speed;
+                } else {
+                    anim2.SetInteger("AnimPar",0);
+                    anim.SetInteger("AnimPar",0);
+                }
+
+            } else if (Input.GetKey(KeyCode.D) && keysPressed<1){
+
+                if (playerIndex == 0){
+                    anim.SetInteger("AnimPar",1);
+                } else {
+                    anim2.SetInteger("AnimPar",1);
+                }
+
+                keysPressed++;
+                if (playerIndex == 1 || (playerIndex == 0 && distBW > 3)){
+                    //move 90 degrees in y axis
+                    if (!isRight){
+                        isRight = true;
                         players[playerIndex].transform.Rotate(0, 90, 0);
+
+                        if (isLeft) {
+                            isLeft = false;
+                            players[playerIndex].transform.Rotate(0, 90, 0);
+                        }
                     }
+                    movementVector = players[playerIndex].transform.forward *speed;
+                } else {
+                    anim.SetInteger("AnimPar",0);
+                    anim2.SetInteger("AnimPar",0);
                 }
-                movementVector = players[playerIndex].transform.forward *speed;
 
             }
+
             if (playerIndex == 0){
                 controller.Move(movementVector * Time.deltaTime);
             } else {
@@ -93,6 +98,7 @@ public class Player : MonoBehaviour
             }
 
         } else {
+            keysPressed = 0;
             if (playerIndex == 0){
                 anim.SetInteger("AnimPar",0);
             } else {
@@ -107,9 +113,15 @@ public class Player : MonoBehaviour
             isLeft = false;
             isRight = false;
 
+            if (Input.GetKeyDown(KeyCode.LeftShift)){
+                if (playerIndex == 0){
+                    playerIndex = 1;
+                } else {
+                    playerIndex = 0;
+                }
+
+            } 
+
         }
-
-
-
     }
 }

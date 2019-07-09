@@ -55,6 +55,7 @@
   <ItemGroup>
      <Compile Include="Assets\Script\ClothesChange.cs" />
      <Compile Include="Assets\Script\FlashingLight.cs" />
+     <Compile Include="Assets\Script\Player.cs" />
      <Compile Include="Assets\Script\Spawn.cs" />
      <Compile Include="Assets\Script\Surf.cs" />
  <Reference Include="Unity.Timeline.Editor">

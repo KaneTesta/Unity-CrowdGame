@@ -60,3 +60,12 @@ sysinfo.txt
 
 # Crashlytics generated file
 crashlytics-build.properties
+Crowd-Game/Assembly-CSharp.csproj
+Crowd-Game/Assembly-CSharp.csproj
+Crowd-Game/Assets/Blends/PlayerController.controller
+*.meta
+*.csproj
+*.info
+*.dwlt
+*.vis
+*.csproj

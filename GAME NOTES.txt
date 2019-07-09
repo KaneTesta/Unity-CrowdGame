@@ -1,18 +1,14 @@
-
-Crowd Surfer Spawn Area (X,Y,Z):
-
-Top-Left: (-14,6,6.75)
-Top-Right:(8, 6, 6.75)
-
-Character:
-Scale = 0.4
-Rotation = (270, 90, 90)
-
-
 Rock Concert Game
-- ADd Negative Points for players falling thru floor
+- Add Negative Points for players falling thru floor
+- Add plus points for players being caught
+- Change all material colours to red if they aren't caught
+- Change all material colours to green if they are caught
 - Add Ragdoll Effect to falling crowd surfers
 - Add Plugger Surfers that need Two security
+- Add chorus that spawns extra surfers
+- Add "!" above peoples heads, if they arent clicked on, a fight starts and you lose a life
+- Add injured surfers that need to be treated (?)
+
 
 Fixes
 - Make functions to reduce repeated code
