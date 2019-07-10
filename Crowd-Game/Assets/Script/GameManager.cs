@@ -11,6 +11,7 @@ public class GameManager : MonoBehaviour
     public GameObject[] Security = new GameObject[2];
     public GameObject[] skulls = new GameObject[3];
     public GameObject GameOverText;
+    public GameObject[] lights = new GameObject[3];
 
 
     public Text ScoreText;
@@ -34,25 +35,39 @@ public class GameManager : MonoBehaviour
 
         if (updateLives){
             if (l == 0){
-                GameOver();
                 skulls[0].SetActive(false);
+                skulls[1].SetActive(false);
+                skulls[2].SetActive(false);
+                GameOverLoss();
             } else if (l == 1){
                 skulls[1].SetActive(false);
+                skulls[2].SetActive(false);
             } else if (l == 2){
                 skulls[2].SetActive(false);
             }
             updateLives = false;
         }
         SetScoreText();
+
+        if (gameScore >= 12 && SurferScript.GetComponent<Spawn>().surfCount == 15) {
+            GameOverWin();
+        }
+
     }
 
     void SetScoreText() {
         ScoreText.text = gameScore.ToString();
     }
 
-    void GameOver() {
+    void GameOverLoss() {
         GameOverText.SetActive(true);
         Invoke("Restart", 5f);
+        lightsChange(Color.red);
+    }
+
+    void GameOverWin(){
+        Invoke("Restart", 5f);
+        lightsChange(Color.green);
     }
 
     void Restart() {
@@ -60,6 +75,13 @@ public class GameManager : MonoBehaviour
         GameOverText.SetActive(false);
         gameScore = 0;
         l = 0;
+    }
+
+    void lightsChange(Color lightColor) {
+        foreach (GameObject light in lights){
+            light.GetComponent<Light>().color = lightColor;
+            light.GetComponent<FlashingLight>().gameObject.SetActive(false);
+        }
     }
 
 }

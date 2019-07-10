@@ -68,7 +68,7 @@ public class Spawn : MonoBehaviour
         while (surfCount < 15)
         {
             //Instantiate Random Variables
-            xPos = UnityEngine.Random.Range(-11,9);
+            xPos = UnityEngine.Random.Range(-9,9);
             surfType = UnityEngine.Random.Range(1,3);
             
             //Create Character in Game

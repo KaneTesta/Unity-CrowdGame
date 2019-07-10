@@ -7415,6 +7415,10 @@ MonoBehaviour:
   - {fileID: 2008746170}
   - {fileID: 1517048665}
   GameOverText: {fileID: 653623206}
+  lights:
+  - {fileID: 305457166}
+  - {fileID: 1364029196}
+  - {fileID: 68586467}
   ScoreText: {fileID: 671359801}
 --- !u!4 &1347945643
 Transform:
