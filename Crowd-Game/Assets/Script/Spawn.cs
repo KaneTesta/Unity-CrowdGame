@@ -18,6 +18,9 @@ public class Spawn : MonoBehaviour
     bool isWandering = false;
     string prevState;
 
+    public int lives = 3;
+    public int score = 0;
+
 
     // Start is called before the first frame update
     void Start()
@@ -26,16 +29,19 @@ public class Spawn : MonoBehaviour
     }
 
     void Update() {
+
+        //Controls the reactions of crowd to surfers
         if (isWandering == false) 
        {
            StartCoroutine(SurfMove());
            InvokeRepeating("SurferReact", 0f, 2.0f);
        } 
         
+        //Make the surfers move
         object[] obj = GameObject.FindObjectsOfType(typeof (GameObject));
-        //Surfer Stuff
         if (isMoving == true)
         {
+            //Look for surfers in all gameobjects and move them accordingly
             foreach (object o in obj)
             {
                 GameObject surfy = (GameObject) o;
@@ -46,6 +52,7 @@ public class Spawn : MonoBehaviour
                     }
                     if (surfy.transform.position.y < -2.5){
                         Destroy(surfy);
+                        lives--;
                     }
                 }
             }
@@ -63,9 +70,9 @@ public class Spawn : MonoBehaviour
             
             //Create Character in Game
             if (surfType == 1){
-                Instantiate(surfer, new Vector3(xPos,6,6.75f), Quaternion.identity).GetComponent<Animation>().Play("Surfer1");;
+                Instantiate(surfer, new Vector3(xPos,5.5f,6.75f), Quaternion.identity).GetComponent<Animation>().Play("Surfer1");;
             } else if (surfType == 2){
-                Instantiate(surfer, new Vector3(xPos,6,6.75f), Quaternion.identity).GetComponent<Animation>().Play("Surfer2");;
+                Instantiate(surfer, new Vector3(xPos,5.5f,6.75f), Quaternion.identity).GetComponent<Animation>().Play("Surfer2");;
             }
             surfer.transform.localScale = new Vector3(currentScale, currentScale, currentScale);
             yield return new WaitForSeconds(3);
@@ -73,7 +80,8 @@ public class Spawn : MonoBehaviour
         }
     }
 
-        void SurferReact()
+    // Make the crowd react to the surfers
+    void SurferReact()
     {
         bool surferExists = false;
         object[] obj = GameObject.FindObjectsOfType(typeof (GameObject));
@@ -92,7 +100,9 @@ public class Spawn : MonoBehaviour
                             GameObject crowd = (GameObject) o2;
                             if ((crowd.name).Contains("CrowdMember"))
                             {
-                                if (Math.Sqrt(Math.Pow((surfy.transform.position.x - crowd.transform.position.x),2)+Math.Pow((surfy.transform.position.z - crowd.transform.position.z),2)) <=4)
+
+                                //Make a movement to catch the surfers if they are close enough
+                                if (Math.Sqrt(Math.Pow((surfy.transform.position.x - crowd.transform.position.x),2)+Math.Pow((surfy.transform.position.z - crowd.transform.position.z),2)) <=5)
                                 {
                                     int crowdReaction = UnityEngine.Random.Range(1, 7);
                                     foreach(AnimationState state in crowd.GetComponent<Animation>())
@@ -122,6 +132,7 @@ public class Spawn : MonoBehaviour
                                     }
                                 } else 
                                 {
+                                    // If the person is now far from a crowd surfer, continue rocking!
                                     foreach(AnimationState state in crowd.GetComponent<Animation>())
                                     {
                                         if (state.name.Contains("Rock"))
@@ -136,6 +147,7 @@ public class Spawn : MonoBehaviour
                     }
                 }
             }
+            //If no surfer exists, continue rocking out!
             if (surferExists == false)
             {
                 foreach (object o in obj)
