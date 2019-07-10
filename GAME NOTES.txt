@@ -1,4 +1,7 @@
 Rock Concert Game
+
+- Merge Spawn.CS and Surf.CS
+
 - Add Negative Points for players falling thru floor
 - Add plus points for players being caught
 - Change all material colours to red if they aren't caught
@@ -12,4 +15,4 @@ Rock Concert Game
 
 Fixes
 - Make functions to reduce repeated code
-- Fix broken rotations
+- Replace all animations for animators with parameters to represent the random animations

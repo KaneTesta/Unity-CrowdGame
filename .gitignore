@@ -70,3 +70,4 @@ Crowd-Game/Assets/Blends/PlayerController.controller
 *.vis
 *.csproj
 Crowd-Game/Temp/UnityLockfile
+*.meta

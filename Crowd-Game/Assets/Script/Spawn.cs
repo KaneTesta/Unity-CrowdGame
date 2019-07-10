@@ -1,17 +1,22 @@
 ﻿using System.Collections;
+using System;
 using System.Collections.Generic;
 using UnityEngine;
 
 public class Spawn : MonoBehaviour
 {
 
-    public GameObject surfer1;
-    public GameObject surfer2;
+    public GameObject surfer;
     int xPos;
     int surfCount = 0;
     int surfType;
     static float currentScale = 0.4f;
     Animation anim;
+
+    public float moveSpeed = 3f;
+    bool isMoving = true;
+    bool isWandering = false;
+    string prevState;
 
 
     // Start is called before the first frame update
@@ -20,31 +25,154 @@ public class Spawn : MonoBehaviour
         StartCoroutine(SurfSpawn());
     }
 
+    void Update() {
+        if (isWandering == false) 
+       {
+           StartCoroutine(SurfMove());
+           InvokeRepeating("SurferReact", 0f, 2.0f);
+       } 
+        
+        object[] obj = GameObject.FindObjectsOfType(typeof (GameObject));
+        //Surfer Stuff
+        if (isMoving == true)
+        {
+            foreach (object o in obj)
+            {
+                GameObject surfy = (GameObject) o;
+                if (surfy.name == "Crowd Member(Clone)"){
+                    surfy.transform.position += surfy.transform.forward * -moveSpeed * Time.deltaTime;
+                    if (surfy.transform.position.z < -4.8) {
+                        surfy.transform.position += Vector3.down * 2*moveSpeed * Time.deltaTime;
+                    }
+                    if (surfy.transform.position.y < -2.5){
+                        Destroy(surfy);
+                    }
+                }
+            }
+        }
+    }
+
 
     IEnumerator SurfSpawn()
     {
         while (surfCount < 15)
         {
             //Instantiate Random Variables
-            xPos = Random.Range(-14,9);
-            surfType = Random.Range(1,3);
+            xPos = UnityEngine.Random.Range(-14,9);
+            surfType = UnityEngine.Random.Range(1,3);
             
-            Debug.Log(surfType);
             //Create Character in Game
             if (surfType == 1){
-                Instantiate(surfer1, new Vector3(xPos,6,6.75f), Quaternion.identity);
-                surfer1.transform.localScale = new Vector3(currentScale, currentScale, currentScale);
-                anim = surfer1.GetComponent<Animation>();
-                anim.wrapMode = WrapMode.Loop;
+                Instantiate(surfer, new Vector3(xPos,6,6.75f), Quaternion.identity).GetComponent<Animation>().Play("Surfer1");;
             } else if (surfType == 2){
-                Instantiate(surfer2, new Vector3(xPos,6,6.75f), Quaternion.identity);
-                surfer2.transform.localScale = new Vector3(currentScale, currentScale, currentScale);
-                anim = surfer2.GetComponent<Animation>();
-                anim.wrapMode = WrapMode.Loop;
+                Instantiate(surfer, new Vector3(xPos,6,6.75f), Quaternion.identity).GetComponent<Animation>().Play("Surfer2");;
             }
+            surfer.transform.localScale = new Vector3(currentScale, currentScale, currentScale);
             yield return new WaitForSeconds(3);
             surfCount+=1;
         }
+    }
+
+        void SurferReact()
+    {
+        bool surferExists = false;
+        object[] obj = GameObject.FindObjectsOfType(typeof (GameObject));
+        //Surfer Stuff
+        if (isMoving == true)
+        {
+            foreach (object o in obj)
+            {
+                GameObject surfy = (GameObject) o;
+                if (surfy.name == "Crowd Member(Clone)"){
+                    surferExists = true;
+                    if (surfy.transform.position.z >= -4.8) {
+                        //CROWD REACTION TO SURFERS
+                        foreach (object o2 in obj)
+                        {
+                            GameObject crowd = (GameObject) o2;
+                            if ((crowd.name).Contains("CrowdMember"))
+                            {
+                                if (Math.Sqrt(Math.Pow((surfy.transform.position.x - crowd.transform.position.x),2)+Math.Pow((surfy.transform.position.z - crowd.transform.position.z),2)) <=4)
+                                {
+                                    int crowdReaction = UnityEngine.Random.Range(1, 7);
+                                    foreach(AnimationState state in crowd.GetComponent<Animation>())
+                                    {
+                                        if (crowdReaction == 5)
+                                        {
+                                            if (state.name == "Crowd_Crowdsurf2")
+                                            {
+                                                crowd.GetComponent<Animation>().Play(state.name);
+                                                break;
+                                            }
+                                        } else if (crowdReaction == 6)
+                                        {
+                                            if (state.name == "Crowd_Crowdsurf3")
+                                            {
+                                                crowd.GetComponent<Animation>().Play(state.name);
+                                                break;
+                                            }
+                                        } else 
+                                        {
+                                            if (state.name == "Crowd_Crowdsurf1")
+                                            {
+                                                crowd.GetComponent<Animation>().Play(state.name);
+                                                break;
+                                            }
+                                        }
+                                    }
+                                } else 
+                                {
+                                    foreach(AnimationState state in crowd.GetComponent<Animation>())
+                                    {
+                                        if (state.name.Contains("Rock"))
+                                        {
+                                            crowd.GetComponent<Animation>().Play(state.name);
+                                            break;
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+            if (surferExists == false)
+            {
+                foreach (object o in obj)
+                {
+                    GameObject crowd = (GameObject) o;
+                    if ((crowd.name).Contains("CrowdMember")){
+                        foreach(AnimationState state in crowd.GetComponent<Animation>())
+                        {
+                            if (state.name.Contains("Rock"))
+                            {
+                                crowd.GetComponent<Animation>().Play(state.name);
+                                break;
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    }
+
+
+    IEnumerator SurfMove()
+    {
+        int moveWait = UnityEngine.Random.Range(1, 4);
+        int moveTime = UnityEngine.Random.Range(1, 5);
+
+        isWandering = true;
+
+        yield return new WaitForSeconds(moveWait);
+        isMoving = true;
+        yield return new WaitForSeconds(moveTime);
+        isMoving = false;
+
+        isWandering = false;
+
+
+
     }
 
 

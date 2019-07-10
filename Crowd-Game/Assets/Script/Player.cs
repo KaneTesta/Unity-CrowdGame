@@ -31,7 +31,6 @@ public class Player : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        Debug.Log(playerIndex);
         distBW = Math.Abs(players[0].transform.position.x - players[1].transform.position.x);
       
         if (Input.GetKey(KeyCode.A) || Input.GetKey(KeyCode.D)){
