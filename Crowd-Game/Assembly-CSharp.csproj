@@ -54,6 +54,7 @@
   </ItemGroup>
   <ItemGroup>
      <Compile Include="Assets\Script\ClothesChange.cs" />
+     <Compile Include="Assets\Script\CollisionDetector.cs" />
      <Compile Include="Assets\Script\FlashingLight.cs" />
      <Compile Include="Assets\Script\GameManager.cs" />
      <Compile Include="Assets\Script\Player.cs" />

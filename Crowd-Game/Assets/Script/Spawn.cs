@@ -13,13 +13,15 @@ public class Spawn : MonoBehaviour
     static float currentScale = 0.4f;
     Animation anim;
 
-    public float moveSpeed = 3f;
     bool isMoving = true;
     bool isWandering = false;
     string prevState;
-
     public int lives = 3;
-    public int score = 0;
+
+    static double BARRIER_Z_COORD = -4.8;
+    static double FLOOR_Y_COORD_FOR_DEATH = -2.5;
+    static double CROWD_TO_SURFER_RADIUS = 5;
+    static float SURF_SPEED = 5f;
 
 
     // Start is called before the first frame update
@@ -45,12 +47,12 @@ public class Spawn : MonoBehaviour
             foreach (object o in obj)
             {
                 GameObject surfy = (GameObject) o;
-                if (surfy.name == "Crowd Member(Clone)"){
-                    surfy.transform.position += surfy.transform.forward * -moveSpeed * Time.deltaTime;
-                    if (surfy.transform.position.z < -4.8) {
-                        surfy.transform.position += Vector3.down * 2*moveSpeed * Time.deltaTime;
+                if (surfy.name == "Surfer(Clone)"){
+                    surfy.transform.position += surfy.transform.forward * -SURF_SPEED * Time.deltaTime;
+                    if (surfy.transform.position.z < BARRIER_Z_COORD) {
+                        surfy.transform.position += Vector3.down * 2*SURF_SPEED * Time.deltaTime;
                     }
-                    if (surfy.transform.position.y < -2.5){
+                    if (surfy.transform.position.y < FLOOR_Y_COORD_FOR_DEATH){
                         Destroy(surfy);
                         lives--;
                     }
@@ -93,7 +95,7 @@ public class Spawn : MonoBehaviour
                 GameObject surfy = (GameObject) o;
                 if (surfy.name == "Crowd Member(Clone)"){
                     surferExists = true;
-                    if (surfy.transform.position.z >= -4.8) {
+                    if (surfy.transform.position.z >= BARRIER_Z_COORD) {
                         //CROWD REACTION TO SURFERS
                         foreach (object o2 in obj)
                         {
@@ -102,7 +104,7 @@ public class Spawn : MonoBehaviour
                             {
 
                                 //Make a movement to catch the surfers if they are close enough
-                                if (Math.Sqrt(Math.Pow((surfy.transform.position.x - crowd.transform.position.x),2)+Math.Pow((surfy.transform.position.z - crowd.transform.position.z),2)) <=5)
+                                if (Math.Sqrt(Math.Pow((surfy.transform.position.x - crowd.transform.position.x),2)+Math.Pow((surfy.transform.position.z - crowd.transform.position.z),2)) <= CROWD_TO_SURFER_RADIUS)
                                 {
                                     int crowdReaction = UnityEngine.Random.Range(1, 7);
                                     foreach(AnimationState state in crowd.GetComponent<Animation>())

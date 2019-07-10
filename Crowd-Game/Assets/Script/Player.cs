@@ -7,17 +7,23 @@ public class Player : MonoBehaviour
 {
     private Animator anim;
     private Animator anim2;
+
     private CharacterController controller;
     private CharacterController controller2;
-    public float speed = 6.0f;
+
     private Vector3 movementVector = Vector3.zero;
+
     private bool isLeft = false;
     private bool isRight = false;
+
     float distBW = 1000;
     int keysPressed = 0;
 
     public GameObject[] players = new GameObject[2];
     int playerIndex = 0;
+
+    static int SECURITY_DIST_BW = 3;
+    public static float PLAYER_SPEED = 10.0f;
 
     // Start is called before the first frame update
     void Start()
@@ -33,6 +39,11 @@ public class Player : MonoBehaviour
     {
         distBW = Math.Abs(players[0].transform.position.x - players[1].transform.position.x);
       
+        movePlayer();
+        
+    }
+
+    void movePlayer(){
         if (Input.GetKey(KeyCode.A) || Input.GetKey(KeyCode.D)){
 
             if (Input.GetKey(KeyCode.A) && keysPressed<1){
@@ -56,7 +67,7 @@ public class Player : MonoBehaviour
                             transform.Rotate(0, -90, 0);
                         }
                     }
-                    movementVector = players[playerIndex].transform.forward *speed;
+                    movementVector = players[playerIndex].transform.forward *PLAYER_SPEED;
                 } else {
                     anim2.SetInteger("AnimPar",0);
                     anim.SetInteger("AnimPar",0);
@@ -71,7 +82,7 @@ public class Player : MonoBehaviour
                 }
 
                 keysPressed++;
-                if (playerIndex == 1 || (playerIndex == 0 && distBW > 3)){
+                if (playerIndex == 1 || (playerIndex == 0 && distBW > SECURITY_DIST_BW)){
                     //move 90 degrees in y axis
                     if (!isRight){
                         isRight = true;
@@ -82,7 +93,7 @@ public class Player : MonoBehaviour
                             players[playerIndex].transform.Rotate(0, 90, 0);
                         }
                     }
-                    movementVector = players[playerIndex].transform.forward *speed;
+                    movementVector = players[playerIndex].transform.forward *PLAYER_SPEED;
                 } else {
                     anim.SetInteger("AnimPar",0);
                     anim2.SetInteger("AnimPar",0);

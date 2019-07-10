@@ -1,9 +1,11 @@
 Rock Concert Game
 
-- Add plus points for players being caught
-- Change all material colours to red if they aren't caught
-- Change all material colours to green if they are caught
-- Add Ragdoll Effect to falling crowd surfers
+- Red lights on GameOver
+- Idle Audience, Music Stops on GameOver
+
+- Change all material colours to red if they aren't caught, play bad sound
+- Change all material colours to green if they are caught, play good sound
+
 - Add Plugger Surfers that need Two security
 - Add chorus that spawns extra surfers
 - Add "!" above peoples heads, if they arent clicked on, a fight starts and you lose a life

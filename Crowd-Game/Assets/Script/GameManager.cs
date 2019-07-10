@@ -8,11 +8,14 @@ public class GameManager : MonoBehaviour
 {
 
     public GameObject SurferScript;
-    public Text ScoreText;
-    public GameObject GameOverText;
+    public GameObject[] Security = new GameObject[2];
     public GameObject[] skulls = new GameObject[3];
+    public GameObject GameOverText;
+
+
+    public Text ScoreText;
     int l = 3;
-    int score = 0;
+    int gameScore = 0;
     bool updateLives = false;
 
     void Start() {
@@ -27,7 +30,7 @@ public class GameManager : MonoBehaviour
             l = SurferScript.GetComponent<Spawn>().lives;
             updateLives = true;
         }
-        score = SurferScript.GetComponent<Spawn>().surfCount; //CHANGE THIS FOR THE ACTUAL SCORE FIELD
+        gameScore = Security[0].GetComponent<CollisionDetector>().score + Security[1].GetComponent<CollisionDetector>().score; //CHANGE THIS FOR THE ACTUAL SCORE FIELD
 
         if (updateLives){
             if (l == 0){
@@ -44,7 +47,7 @@ public class GameManager : MonoBehaviour
     }
 
     void SetScoreText() {
-        ScoreText.text = score.ToString();
+        ScoreText.text = gameScore.ToString();
     }
 
     void GameOver() {
@@ -55,7 +58,7 @@ public class GameManager : MonoBehaviour
     void Restart() {
         SceneManager.LoadScene(SceneManager.GetActiveScene().name);
         GameOverText.SetActive(false);
-        score = 0;
+        gameScore = 0;
         l = 0;
     }
 
