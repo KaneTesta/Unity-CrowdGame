@@ -8,7 +8,7 @@ public class Spawn : MonoBehaviour
 
     public GameObject surfer;
     int xPos;
-    int surfCount = 0;
+    public int surfCount = 0;
     int surfType;
     static float currentScale = 0.4f;
     Animation anim;
