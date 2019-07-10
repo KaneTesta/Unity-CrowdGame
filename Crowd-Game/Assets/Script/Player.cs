@@ -24,6 +24,8 @@ public class Player : MonoBehaviour
 
     static int SECURITY_DIST_BW = 3;
     public static float PLAYER_SPEED = 10.0f;
+    static float SEC_TO_SURFER_RADIUS = 5;
+
 
     // Start is called before the first frame update
     void Start()
@@ -40,7 +42,7 @@ public class Player : MonoBehaviour
         distBW = Math.Abs(players[0].transform.position.x - players[1].transform.position.x);
       
         movePlayer();
-        
+        securityReactionCheck();
     }
 
     void movePlayer(){
@@ -49,9 +51,9 @@ public class Player : MonoBehaviour
             if (Input.GetKey(KeyCode.A) && keysPressed<1){
 
                 if (playerIndex == 0){
-                    anim.SetInteger("AnimPar",1);
+                    anim.SetInteger("Run",1);
                 } else {
-                    anim2.SetInteger("AnimPar",1);
+                    anim2.SetInteger("Run",1);
                 }
 
                 keysPressed++;
@@ -69,16 +71,16 @@ public class Player : MonoBehaviour
                     }
                     movementVector = players[playerIndex].transform.forward *PLAYER_SPEED;
                 } else {
-                    anim2.SetInteger("AnimPar",0);
-                    anim.SetInteger("AnimPar",0);
+                    anim2.SetInteger("Run",0);
+                    anim.SetInteger("Run",0);
                 }
 
             } else if (Input.GetKey(KeyCode.D) && keysPressed<1){
 
                 if (playerIndex == 0){
-                    anim.SetInteger("AnimPar",1);
+                    anim.SetInteger("Run",1);
                 } else {
-                    anim2.SetInteger("AnimPar",1);
+                    anim2.SetInteger("Run",1);
                 }
 
                 keysPressed++;
@@ -95,8 +97,8 @@ public class Player : MonoBehaviour
                     }
                     movementVector = players[playerIndex].transform.forward *PLAYER_SPEED;
                 } else {
-                    anim.SetInteger("AnimPar",0);
-                    anim2.SetInteger("AnimPar",0);
+                    anim.SetInteger("Run",0);
+                    anim2.SetInteger("Run",0);
                 }
 
             }
@@ -109,10 +111,11 @@ public class Player : MonoBehaviour
 
         } else {
             keysPressed = 0;
+
             if (playerIndex == 0){
-                anim.SetInteger("AnimPar",0);
+                anim.SetInteger("Run",0);
             } else {
-                anim2.SetInteger("AnimPar",0);
+                anim2.SetInteger("Run",0);
             }
 
             if (isLeft){
@@ -133,5 +136,28 @@ public class Player : MonoBehaviour
             } 
 
         }
+    }
+
+    void securityReactionCheck(){
+
+        object[] obj = GameObject.FindObjectsOfType(typeof (GameObject));
+        foreach (object o in obj){
+            GameObject surfer = (GameObject) o;
+            if (surfer.name == "Surfer(Clone)"){
+                for (int i = 0; i < players.Length; i++){
+                    if (Math.Sqrt(Math.Pow((players[i].transform.position.x - surfer.transform.position.x),2)+Math.Pow((players[i].transform.position.z - surfer.transform.position.z),2)) <= SEC_TO_SURFER_RADIUS){
+                        if (i == 0){
+                            anim.SetInteger("Catch",1);
+                            return;
+                        } else if (i == 1){
+                            anim2.SetInteger("Catch",1);
+                            return;
+                        }
+                    }
+                }
+            }
+        }
+        anim.SetInteger("Catch",0);
+        anim2.SetInteger("Catch",0);
     }
 }
