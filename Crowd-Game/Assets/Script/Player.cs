@@ -34,15 +34,28 @@ public class Player : MonoBehaviour
         controller = players[0].GetComponent<CharacterController>();
         anim2 = players[1].gameObject.GetComponentInChildren<Animator>();
         controller2 = players[1].GetComponent<CharacterController>();
+        players[1].transform.Find("Directional Light").gameObject.SetActive(false);
+
     }
 
     // Update is called once per frame
     void Update()
     {
         distBW = Math.Abs(players[0].transform.position.x - players[1].transform.position.x);
-      
+    
         movePlayer();
         securityReactionCheck();
+    }
+
+
+    void playerSpotlightUpdate(){
+
+        players[playerIndex].transform.Find("Directional Light").gameObject.SetActive(true);
+        if (playerIndex == 0){
+            players[1].transform.Find("Directional Light").gameObject.SetActive(false);
+        } else if (playerIndex == 1) {
+            players[0].transform.Find("Directional Light").gameObject.SetActive(false);
+        }
     }
 
     void movePlayer(){
@@ -132,6 +145,9 @@ public class Player : MonoBehaviour
                 } else {
                     playerIndex = 0;
                 }
+                playerSpotlightUpdate();
+
+
 
             } 
 

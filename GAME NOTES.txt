@@ -10,6 +10,7 @@ Rock Concert Game
 - Add chorus that spawns extra surfers
 - Add "!" above peoples heads, if they arent clicked on, a fight starts and you lose a life
 - Add injured surfers that need to be treated (?)
+- Make spotlights switch for TROLL
 
 
 Fixes

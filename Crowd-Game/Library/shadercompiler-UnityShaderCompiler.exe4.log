@@ -1,43 +1,4 @@
 Base path: 'D:/Program Files/2019.3.0a7/Editor/Data', plugins path 'D:/Program Files/2019.3.0a7/Editor/Data/PlaybackEngines'
 Cmd: initializeCompiler
-Cmd: compileComputeKernel
-  api=4 insize=18299 outsize=8873 ok=1
-Cmd: initializeCompiler
-Cmd: compileComputeKernel
-  api=4 insize=7700 outsize=4600 ok=1
-Cmd: compileComputeKernel
-  api=4 insize=3022 outsize=494 ok=1
-Cmd: compileComputeKernel
-  api=4 insize=35025 outsize=31517 ok=1
-Cmd: compileComputeKernel
-  api=4 insize=35025 outsize=33729 ok=1
-Cmd: compileComputeKernel
-  api=4 insize=21524 outsize=15324 ok=1
-Cmd: compileComputeKernel
-  api=4 insize=18645 outsize=4959 ok=1
-Cmd: compileComputeKernel
-  api=4 insize=9347 outsize=9139 ok=1
-Cmd: compileComputeKernel
-  api=4 insize=5065 outsize=2822 ok=1
-Cmd: compileComputeKernel
-  api=4 insize=25750 outsize=15415 ok=1
-Cmd: compileComputeKernel
-  api=4 insize=15446 outsize=13846 ok=1
-Cmd: compileComputeKernel
-  api=4 insize=15446 outsize=38390 ok=1
-Cmd: compileComputeKernel
-  api=4 insize=15446 outsize=32044 ok=1
-Cmd: compileComputeKernel
-  api=4 insize=15446 outsize=65507 ok=1
-Cmd: compileComputeKernel
-  api=4 insize=15446 outsize=22220 ok=1
-Cmd: compileComputeKernel
-  api=4 insize=15446 outsize=40259 ok=1
-Cmd: compileComputeKernel
-  api=4 insize=15446 outsize=50361 ok=1
-Cmd: compileComputeKernel
-  api=4 insize=15446 outsize=33849 ok=1
-Cmd: compileComputeKernel
-  api=4 insize=17080 outsize=25449 ok=1
-Cmd: compileComputeKernel
-  api=4 insize=7423 outsize=1033 ok=1
+Cmd: compileSnippet
+  api=4 type=0 insize=1454 outsize=1918 kw=UNITY_PASS_FORWARDADD SPOT SHADOWS_DEPTH SHADOWS_SOFT pd=UNITY_ENABLE_REFLECTION_BUFFERS UNITY_USE_DITHER_MASK_FOR_ALPHABLENDED_SHADOWS UNITY_PBS_USE_BRDF1 UNITY_SPECCUBE_BOX_PROJECTION UNITY_SPECCUBE_BLENDING UNITY_ENABLE_DETAIL_NORMALMAP SHADER_API_DESKTOP UNITY_COLORSPACE_GAMMA UNITY_LIGHT_PROBE_PROXY_VOLUME UNITY_LIGHTMAP_FULL_HDR ok=1

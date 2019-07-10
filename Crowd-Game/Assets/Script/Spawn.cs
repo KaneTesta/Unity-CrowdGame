@@ -22,6 +22,7 @@ public class Spawn : MonoBehaviour
     static double FLOOR_Y_COORD_FOR_DEATH = -2.5;
     static double CROWD_TO_SURFER_RADIUS = 5;
     static float SURF_SPEED = 5f;
+    float SPAWN_DELAY = 2f;
 
 
     // Start is called before the first frame update
@@ -67,7 +68,7 @@ public class Spawn : MonoBehaviour
         while (surfCount < 15)
         {
             //Instantiate Random Variables
-            xPos = UnityEngine.Random.Range(-14,9);
+            xPos = UnityEngine.Random.Range(-11,9);
             surfType = UnityEngine.Random.Range(1,3);
             
             //Create Character in Game
@@ -77,7 +78,7 @@ public class Spawn : MonoBehaviour
                 Instantiate(surfer, new Vector3(xPos,5.5f,6.75f), Quaternion.identity).GetComponent<Animation>().Play("Surfer2");;
             }
             surfer.transform.localScale = new Vector3(currentScale, currentScale, currentScale);
-            yield return new WaitForSeconds(3);
+            yield return new WaitForSeconds(SPAWN_DELAY);
             surfCount+=1;
         }
     }
