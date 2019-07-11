@@ -1,8 +1,6 @@
 Rock Concert Game
 
-- Red lights on GameOver
 - Idle Audience, Music Stops on GameOver
-
 - Change all material colours to red if they aren't caught, play bad sound
 - Change all material colours to green if they are caught, play good sound
 
@@ -11,9 +9,11 @@ Rock Concert Game
 - Add "!" above peoples heads, if they arent clicked on, a fight starts and you lose a life
 - Add injured surfers that need to be treated (?)
 - Make spotlights switch for TROLL
+- Inverse controls
 
 
 Fixes
+- For future levels, remove "Spawn" code, and replace it with a Surfer class, and a Spawner class that contains surfers.
 - Rid of functions that are unnecessarily in Update functions, these are being called too frequently. Ex. score update
 - Make functions to reduce repeated code
 - Replace all animations for animators with parameters to represent the random animations

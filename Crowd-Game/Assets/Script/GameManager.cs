@@ -83,5 +83,4 @@ public class GameManager : MonoBehaviour
             light.GetComponent<FlashingLight>().gameObject.SetActive(false);
         }
     }
-
 }

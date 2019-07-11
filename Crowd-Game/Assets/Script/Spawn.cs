@@ -52,11 +52,25 @@ public class Spawn : MonoBehaviour
                     surfy.transform.position += surfy.transform.forward * -SURF_SPEED * Time.deltaTime;
                     if (surfy.transform.position.z < BARRIER_Z_COORD) {
                         surfy.transform.position += Vector3.down * 2*SURF_SPEED * Time.deltaTime;
+                        changeAllMaterials(surfy, Color.red);
                     }
                     if (surfy.transform.position.y < FLOOR_Y_COORD_FOR_DEATH){
                         Destroy(surfy);
                         lives--;
                     }
+                }
+            }
+        }
+    }
+
+    void changeAllMaterials(GameObject surfy, Color c)
+    {
+        Component[] surferChildren = surfy.GetComponentsInChildren(typeof (Renderer));
+        foreach(Renderer child in surferChildren) {
+            Material[] mats = child.materials;
+            if (mats[0].color != c && mats[0].color != Color.green){
+                foreach(Material mat in mats){
+                    mat.color = c;
                 }
             }
         }

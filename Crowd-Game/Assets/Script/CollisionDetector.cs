@@ -8,8 +8,27 @@ public class CollisionDetector : MonoBehaviour
 
     void OnTriggerEnter(Collider other){
         if (other.name.Contains("Surfer")){
-            Destroy(other.gameObject);
+            StartCoroutine(DestroyPlayer(other.gameObject));
             score++;
         }
+    }
+
+    void changeAllMaterials(GameObject surfy, Color c)
+    {
+        Component[] surferChildren = surfy.GetComponentsInChildren(typeof (Renderer));
+        foreach(Renderer child in surferChildren) {
+            Material[] mats = child.materials;
+            if (mats[0].color == Color.red){
+                foreach(Material mat in mats){
+                    mat.color = c;
+                }
+            }
+        }
+    }
+
+    IEnumerator DestroyPlayer(GameObject o){
+        changeAllMaterials(o, Color.green);
+        yield return new WaitForSeconds(0.2f);
+        Destroy(o);
     }
 }
